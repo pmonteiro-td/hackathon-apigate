@@ -16,7 +16,11 @@ defmodule Apigate.Router do
   scope "/contacts/" do
     pipe_through :api
 
-    forward "/", ReverseProxy, upstream: ["td-s-new-contacts-api.herokuapp.com"]
+    forward "/", Apigate.Plug.Proxy, [
+        scope:   "/contacts/",
+        to:      "http://td-s-new-contacts-api.herokuapp.com",
+        headers: [{"API-KEY", "td123456"}],
+      ]
   end
 
 #  scope "/", Apigate do
