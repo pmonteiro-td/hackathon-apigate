@@ -19,7 +19,7 @@ defmodule Apigate.Mixfile do
   def application do
     [mod: {Apigate, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :reverse_proxy]]
+                    :phoenix_ecto, :postgrex, :httpoison, :tzdata]]
   end
 
   # Specifies which paths to compile per environment.
@@ -36,8 +36,10 @@ defmodule Apigate.Mixfile do
      {:phoenix_html, "~> 2.3"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
-     {:reverse_proxy, github: 'Talkdesk/elixir-reverse-proxy', branch: '2-host-header-manipulation'},
-     {:cowboy, "~> 1.0"}]
+     {:json_web_token, "~> 0.2"},
+     {:cowboy, "~> 1.0"},
+     {:timex, "~> 0.19.2"},
+     {:httpoison, "~> 0.8.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

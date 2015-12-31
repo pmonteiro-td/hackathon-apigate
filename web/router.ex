@@ -11,6 +11,7 @@ defmodule Apigate.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug Apigate.Plug.JWTAuth, [key: "gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C"]
   end
 
   scope "/contacts/" do
