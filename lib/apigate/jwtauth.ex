@@ -31,7 +31,7 @@ defmodule Apigate.Plug.JWTAuth do
         user: claims[:usr],
       }
       Logger.info "Scope: Account #{scope[:account]}, User #{scope[:user]}"
-      Plug.Conn.put_req_header conn, "scope", Poison.encode!(scope)
+      conn = Plug.Conn.put_req_header conn, "scope", Poison.encode!(scope)
     end
     conn
   end

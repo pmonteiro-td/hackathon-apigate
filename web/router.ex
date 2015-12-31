@@ -14,11 +14,11 @@ defmodule Apigate.Router do
     plug Apigate.Plug.JWTAuth, [key: "gZH75aKtMN3Yj0iPS4hcgUuTwjAzZr9C"]
   end
 
-  scope "/contacts/" do
+  scope "/contacts" do
     pipe_through :api
 
     forward "/", Apigate.Plug.Proxy, [
-        scope:   "/contacts/",
+        scope:   "/contacts",
         to:      "http://td-s-new-contacts-api.herokuapp.com",
         headers: [{"API-KEY", "td123456"}],
       ]

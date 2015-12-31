@@ -12,17 +12,18 @@ defmodule Apigate.Plug.Proxy do
     to = Keyword.get(opts, :to, '')
     headers = Keyword.get(opts, :headers, [])
 
-    Logger.info "scope #{scope}"
-    Logger.info "to #{to}"
-
-    #require IEx; IEx.pry
 
     url = conn.request_path |> String.slice(String.length(scope)..-1)
-    url = "#{to}/#{url}"
+    url = "#{to}#{url}"
     method = conn.method
     body = conn.body_params |> Plug.Conn.Query.encode
 
-    Logger.info "PROXY REQUEST #{method} #{url} "
+    Logger.info "Proxying #{method} #{conn.request_path} -> #{url}"
+
+    if conn.req_headers["scope"] do
+      Logger.debug "Injecting scope header based on JWT token claims."
+      headers = headers ++ [{"Scope", conn.req_headers["scope"]}]
+    end
 
     HTTPoison.request(method, url, body, headers) |> process_response(conn)
   end
